@@ -59,11 +59,12 @@ class ServerlessS3Sync {
         const params = {
           maxAsyncS3: 5,
           localDir: [servicePath, s.localDir].join('/'),
-          deleteRemoved: true,
           followSymlinks: false,
           s3Params: {
             Bucket: s.bucketName,
-            Prefix: bucketPrefix
+            Prefix: bucketPrefix,
+	    ACL: 'public-read',
+	    CacheControl: 'max-age=86400,public'
           }
         };
         const uploader = this.client().uploadDir(params);
